@@ -40,6 +40,7 @@ enum Controls {
   UseFloatingIP = 'useFloatingIP',
   DiskSize = 'diskSize',
   CustomDiskSize = 'customDiskSize',
+  DiskVolumeType = 'DiskVolumeType',
   Image = 'image',
   AvailabilityZone = 'availabilityZone',
   InstanceReadyCheckPeriod = 'instanceReadyCheckPeriod',
@@ -129,6 +130,7 @@ export class OpenstackBasicNodeDataComponent extends BaseFormValidator implement
       [Controls.UseFloatingIP]: this._builder.control(false),
       [Controls.DiskSize]: this._builder.control(null),
       [Controls.CustomDiskSize]: this._builder.control(''),
+      [Controls.DiskVolumeType]: this._builder.control(''),
       [Controls.Image]: this._builder.control('', Validators.required),
       [Controls.AvailabilityZone]: this._builder.control(''),
       [Controls.InstanceReadyCheckPeriod]: this._builder.control(this._instanceReadyCheckPeriodDefault),
@@ -140,6 +142,7 @@ export class OpenstackBasicNodeDataComponent extends BaseFormValidator implement
 
     merge(
       this.form.get(Controls.DiskSize).valueChanges,
+      this.form.get(Controls.DiskVolumeType).valueChanges,
       this.form.get(Controls.Image).valueChanges,
       this.form.get(Controls.UseFloatingIP).valueChanges,
       this.form.get(Controls.InstanceReadyCheckPeriod).valueChanges,
@@ -220,6 +223,9 @@ export class OpenstackBasicNodeDataComponent extends BaseFormValidator implement
       this.form.get(Controls.UseFloatingIP).setValue(this._nodeDataService.nodeData.spec.cloud.openstack.useFloatingIP);
       this.form.get(Controls.Image).setValue(this._nodeDataService.nodeData.spec.cloud.openstack.image);
       this.form.get(Controls.DiskSize).setValue(this._nodeDataService.nodeData.spec.cloud.openstack.diskSize);
+      this.form
+        .get(Controls.DiskVolumeType)
+        .setValue(this._nodeDataService.nodeData.spec.cloud.openstack.diskVolumeType);
       this.form.get(Controls.InstanceReadyCheckPeriod).setValue(instanceReadyCheckPeriod);
       this.form.get(Controls.InstanceReadyCheckTimeout).setValue(instanceReadyCheckTimeout);
 
@@ -324,6 +330,7 @@ export class OpenstackBasicNodeDataComponent extends BaseFormValidator implement
             image: this.form.get(Controls.Image).value,
             useFloatingIP: this.form.get(Controls.UseFloatingIP).value,
             diskSize: this.form.get(Controls.DiskSize).value,
+            diskVolumeType: this.form.get(Controls.DiskVolumeType).value,
             instanceReadyCheckPeriod: `${this.form.get(Controls.InstanceReadyCheckPeriod).value}s`,
             instanceReadyCheckTimeout: `${this.form.get(Controls.InstanceReadyCheckTimeout).value}s`,
           } as OpenstackNodeSpec,

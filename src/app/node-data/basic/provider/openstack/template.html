@@ -53,6 +53,16 @@ limitations under the License.
            autocomplete="off">
     <mat-hint>An additional network storage volume will be created and used as the disk for the VM.</mat-hint>
   </mat-form-field>
+  <mat-form-field fxFlex
+                  *ngIf="!!form.get(Controls.CustomDiskSize).value"
+                  class="km-with-hint">
+    <mat-label>Disk Volume Type</mat-label>
+    <input [formControlName]="Controls.DiskVolumeType"
+           matInput
+           type="text"
+           autocomplete="off">
+    <mat-hint>Volume Type of the additional volume.</mat-hint>
+  </mat-form-field>
 
   <km-combobox #availabilityZoneCombobox
                [required]="false"

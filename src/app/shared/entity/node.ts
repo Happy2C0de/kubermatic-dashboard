@@ -206,6 +206,7 @@ export class OpenstackNodeSpec {
   useFloatingIP: boolean;
   tags: object;
   diskSize?: number;
+  diskVolumeType?: string;
   availabilityZone?: string;
   instanceReadyCheckPeriod: string;
   instanceReadyCheckTimeout: string;
